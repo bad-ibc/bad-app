@@ -1,0 +1,32 @@
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: Made Of Scars !important;
+}
+
+@font-face {
+  font-family: "Made Of Scars";
+  src: url('../public/Made Of Scars.ttf');
+  src: url('../public/Made Of Scars.ttf') format('truetype'),
+       url('../public/Made Of Scars Mac.ttf') format('truetype');
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+  body {
+    color: white;
+    background: black;
+  }
+}
