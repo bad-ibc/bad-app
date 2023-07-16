@@ -12,7 +12,8 @@ import {
 } from '@chakra-ui/react';
 import { MdVerified } from 'react-icons/md';
 import { useChain } from '@cosmos-kit/react';
-import { chainName, NAMES, OWNED_TOKENS, COLLECTIONS, coin, badkidsAddress } from '../config';
+import { stargazeChainName, NAMES, OWNED_TOKENS, COLLECTIONS, coin, badkidsAddress } from '../config';
+
 import { useLazyQuery } from '@apollo/client';
 import { Collections, Tokens, Names, Token } from './types';
 import { shortenAddress, getStargazeProfileLink } from '../utils';
@@ -30,8 +31,8 @@ import {
 import { getPrices } from '../api';
 import { useColor } from 'hooks';
 
-export const SellNfts = () => {
-  const { address } = useChain(chainName);
+export const FromStargaze = () => {
+  const { address } = useChain(stargazeChainName);
   const [selectedToken, setSelectedToken] = useState<Token>();
   const [price, setPrice] = useState<number>();
 
@@ -54,6 +55,15 @@ export const SellNfts = () => {
       console.error(error);
     }
   };
+
+  // const hydrateTokens = () => {
+  //   console.log('hydrate tokens')
+  //   queryOwnedTokensResult.data.tokens.tokens = queryOwnedTokensResult.data.tokens.tokens.map((t) => {
+  //     console.log('hydrating')
+  //     t.imageUrl = 'https://res.cloudinary.com/stargaze/image/upload/w_700/b5ij1wrgjzmzcivljffz.jpg'
+  //     return t
+  //   })
+  // }
 
   const nftDetailModalControl = useDisclosure();
   const nftSaleModalControl = useDisclosure();
@@ -90,11 +100,16 @@ export const SellNfts = () => {
   }, [address]);
 
   const updateData = () => {
-    queryOwnedTokensResult.refetch();
+    queryOwnedTokensResult.refetch()//.then(hydrateTokens)
     queryCollectionsResult.refetch();
   };
+  const runThis = () => {
+    nftDetailModalControl.onClose()
+    console.log('runThis')
+  }
 
   const update = () => {
+    console.log('update called')
     updateData();
     nftDetailModalControl.onClose();
   };
@@ -136,14 +151,17 @@ export const SellNfts = () => {
   const { colorMode } = useColorMode();
   const { textColor, borderColor, bgColor } = useColor();
 
+      const noAddress = (
+        <Center h="100%" flex="1">
+          <Text fontWeight="600" fontSize="20px" color={textColor.secondary}>
+            Please connect the wallet
+          </Text>
+        </Center>
+        )
+
   return (
     <Flex
       w="792px"
-      border={`1px solid ${borderColor}`}
-      boxShadow={`0px 15px 35px ${
-        colorMode === 'light' ? 'rgba(0, 0, 0, 0.2)' : 'rgba(0, 0, 0, 0.8)'
-      }`}
-      borderRadius="12px"
       px="24px"
       pt="18px"
       pb="75px"
@@ -153,62 +171,16 @@ export const SellNfts = () => {
       flexDir="column"
       bg={bgColor}
     >
-      <Text
-        fontWeight="600"
-        fontSize="20px"
-        lineHeight="shorter"
-        color={textColor.primary}
-        mb="32px"
-      >
-        Bad Kids Profile
-      </Text>
-
-      {!address ? (
-        <Center h="100%" flex="1">
-          <Text fontWeight="600" fontSize="20px" color={textColor.secondary}>
-            Please connect the wallet
-          </Text>
-        </Center>
-      ) : (
+      <Center h="100%" flex="1">
+        <Text
+          cursor="pointer"
+          onClick={updateData}
+        fontWeight="600" fontSize="20px" color={textColor.secondary}>
+          refresh
+        </Text>
+      </Center>
+    {!address ? noAddress : (
         <Flex minH="300px" flexDir="column">
-          <Flex justifyContent="space-between" mb="16px">
-            <HStack spacing="6px">
-              <Text
-                fontWeight="600"
-                fontSize="26px"
-                lineHeight="shorter"
-                color={textColor.primary}
-              >
-                {name}
-              </Text>
-              {isNameVerified && <Icon as={MdVerified} boxSize={6} />}
-            </HStack>
-{/* 
-            <SimpleButton
-              content={
-                <Link
-                  href={getStargazeProfileLink(address)}
-                  isExternal
-                  _hover={{
-                    textDecor: 'unset',
-                  }}
-                >
-                  View on Stargaze
-                </Link>
-              }
-            /> */}
-          </Flex>
-
-          <HStack spacing="24px" mb="30px">
-            {profileStats.map((item) => (
-              <ProfileStat
-                name={item.name}
-                value={item.value}
-                key={item.name}
-              />
-            ))}
-          </HStack>
-
           {isLoading ? (
             <Center h="100%" flex="1">
               <Spinner
@@ -247,57 +219,13 @@ export const SellNfts = () => {
           ownerName={name}
           collection={selectedCollection}
           modalControl={nftDetailModalControl}
-          openModals={{
-            burn: burnModalControl.onOpen,
-            list: nftSaleModalControl.onOpen,
-            transferNft: transferModalControl.onOpen,
-            removeListing: removeListingModalControl.onOpen,
-            updatePrice: updatePriceModalControl.onOpen,
-          }}
-        />
-      )}
-
-      {selectedToken && selectedCollection && (
-        <NftSaleModal
-          modalControl={nftSaleModalControl}
-          token={selectedToken}
-          update={update}
-          collection={selectedCollection}
-          price={price}
-        />
-      )}
-
-      {selectedToken && (
-        <TransferNftModal
-          token={selectedToken}
-          modalControl={transferModalControl}
-          update={update}
-        />
-      )}
-
-      {selectedToken && (
-        <BurnNftModal
-          token={selectedToken}
-          update={update}
-          modalControl={burnModalControl}
-        />
-      )}
-
-      {selectedToken && selectedCollection && (
-        <UpdatePriceModal
-          modalControl={updatePriceModalControl}
-          collection={selectedCollection}
-          update={update}
-          token={selectedToken}
-          price={price}
-        />
-      )}
-
-      {selectedToken && (
-        <RemoveListingModal
-          modalControl={removeListingModalControl}
-          token={selectedToken}
-          update={update}
+          // openModals={{
+          //   burn: burnModalControl.onOpen,
+          //   list: nftSaleModalControl.onOpen,
+          //   transferNft: transferModalControl.onOpen,
+          //   removeListing: removeListingModalControl.onOpen,
+          //   updatePrice: updatePriceModalControl.onOpen,
+          // }}
         />
       )}
     </Flex>

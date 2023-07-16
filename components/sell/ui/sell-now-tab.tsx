@@ -2,7 +2,7 @@ import { Text, Flex } from '@chakra-ui/react';
 import { useChain } from '@cosmos-kit/react';
 import BigNumber from 'bignumber.js';
 import React, { useState } from 'react';
-import { chainName, exponent, marketplaceContract } from 'config';
+import { stargazeChainName, exponent, marketplaceContract } from 'config';
 import { useClient, useColor, useTx } from 'hooks';
 import { getExpirationTime, toDisplayAmount } from 'utils';
 import { Collection, Token } from '../../types';
@@ -23,7 +23,7 @@ export const SellNowTab = ({
   closeModal: () => void;
   collection: Collection;
 }) => {
-  const { address } = useChain(chainName);
+  const { address } = useChain(stargazeChainName);
   const [isLoading, setIsLoading] = useState(false);
   const { getMarketplaceMsgComposer, getSg721UpdatableMsgComposer } =
     useClient();

@@ -2,7 +2,7 @@ import { Text, Flex, Select, Input } from '@chakra-ui/react';
 import { useChain } from '@cosmos-kit/react';
 import BigNumber from 'bignumber.js';
 import React, { useState } from 'react';
-import { chainName, coin, exponent, marketplaceContract } from 'config';
+import { stargazeChainName, coin, exponent, marketplaceContract } from 'config';
 import { useClient, useColor, useTx } from 'hooks';
 import {
   getExpirationTime,
@@ -40,7 +40,7 @@ export const ListTab = ({
   const [isLoading, setIsLoading] = useState(false);
 
   const { tx } = useTx();
-  const { address } = useChain(chainName);
+  const { address } = useChain(stargazeChainName);
   const { getMarketplaceMsgComposer, getSg721UpdatableMsgComposer } =
     useClient();
 

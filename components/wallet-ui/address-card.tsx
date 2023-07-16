@@ -95,8 +95,8 @@ export const ConnectedShowAddress = ({
       display="flex"
       alignItems="center"
       justifyContent="center"
-      borderRadius={isRound ? 'full' : 'lg'}
-      border="1px solid"
+      // borderRadius={isRound ? 'full' : 'lg'}
+      // border="1px solid"
       borderColor={handleChangeColorModeValue(
         colorMode,
         'gray.200',
@@ -109,18 +109,18 @@ export const ConnectedShowAddress = ({
       pr={2}
       color={handleChangeColorModeValue(
         colorMode,
-        'gray.700',
-        'whiteAlpha.600'
+        'primary.100',
+        'primary.900'
       )}
       transition="all .3s ease-in-out"
       isDisabled={!address && true}
       isLoading={isLoading}
-      _hover={{
-        bg: 'rgba(142, 142, 142, 0.05)',
-      }}
-      _focus={{
-        outline: 'none',
-      }}
+      // _hover={{
+      //   bg: 'rgba(142, 142, 142, 0.05)',
+      // }}
+      // _focus={{
+      //   outline: 'none',
+      // }}
       _disabled={{
         opacity: 0.6,
         cursor: 'not-allowed',
@@ -139,7 +139,7 @@ export const ConnectedShowAddress = ({
     >
       {address && walletIcon && (
         <Box
-          borderRadius="full"
+          // borderRadius="full"
           w="full"
           h="full"
           minW={SIZES[size as keyof typeof SIZES].walletImageSize}
@@ -147,7 +147,7 @@ export const ConnectedShowAddress = ({
           maxW={SIZES[size as keyof typeof SIZES].walletImageSize}
           maxH={SIZES[size as keyof typeof SIZES].walletImageSize}
           mr={2}
-          opacity={0.85}
+          // opacity={0.85}
         >
           <Image alt={displayAddress} src={walletIcon} />
         </Box>
@@ -156,7 +156,7 @@ export const ConnectedShowAddress = ({
         fontSize={SIZES[size as keyof typeof SIZES].fontSize}
         fontWeight="normal"
         letterSpacing="0.4px"
-        opacity={0.75}
+        // opacity={0.75}
       >
         {displayAddress}
       </Text>

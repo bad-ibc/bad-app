@@ -2,7 +2,7 @@ import { cosmos } from 'badkidsjs';
 import { isDeliverTxSuccess, StdFee, coins } from '@cosmjs/stargate';
 import { useToaster, ToastType, type CustomToast } from 'hooks/useToaster';
 import { useChain } from '@cosmos-kit/react';
-import { chainName, coin } from 'config';
+import { stargazeChainName, coin } from 'config';
 import { SigningCosmWasmClient } from '@cosmjs/cosmwasm-stargate';
 import { TxRaw } from 'badkidsjs/types/codegen/cosmos/tx/v1beta1/tx';
 import { ToastId } from '@chakra-ui/react';
@@ -26,7 +26,7 @@ export enum TxStatus {
 const txRaw = cosmos.tx.v1beta1.TxRaw;
 
 export const useTx = () => {
-  const { address, getSigningCosmWasmClient } = useChain(chainName);
+  const { address, getSigningCosmWasmClient } = useChain(stargazeChainName);
 
   const toaster = useToaster();
 

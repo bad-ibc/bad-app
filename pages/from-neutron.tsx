@@ -12,19 +12,21 @@ import {
   Flex,
   Icon,
   useColorMode,
+
   Image,
 } from '@chakra-ui/react';
 import { BsFillMoonStarsFill, BsFillSunFill } from 'react-icons/bs';
 import { dependencies, products } from '../config';
+import NextLink from 'next/link';
+
 import {
   Product,
   Dependency,
   WalletSection,
   handleChangeColorModeValue,
-  SellNfts,
+  FromNeutron,
 } from '../components';
-import NextLink from 'next/link';
-// import { ArrowForwardIcon } from '@chakra-ui/icons';
+import { ChainContractProvider } from 'components/chain-provider';
 import { ArrowForwardIcon } from 'components/wallet-ui';
 
 const library = {
@@ -51,23 +53,29 @@ export default function Home() {
         </Button>
       </Flex>
       <Box textAlign="center">
+        <NextLink href="/">
         <Heading
           as="h1"
           fontSize={{ base: '3xl', md: '5xl' }}
           fontWeight="extrabold"
           mb={3}
         >
-          <Image
-          src={ colorMode === 'light' ? '/bad bridge.png'  : '/bad bridge white.png'}
+
+<Image
+          src={ colorMode === 'light' ? '/bad bridge text.png'  : '/bad bridge white text.png'}
           alt="Bad Bridge"
           />
-        </Heading>
-      </Box>
-      <Text fontSize={{ base: 'xxx-large', md: 'xxx-large' }} textAlign="center" mb={6}>
-      don’t tell us what we can or can’t do.
+      <Text fontSize={{ base: 'xxx-large', md: 'xxx-large' }} textAlign="center" mb={6} mt={12}>
+      don’t tell us where we can or can’t be
       </Text>
+        </Heading>
+        </NextLink>
+      </Box>
 
-      {/* <WalletSection /> */}
+      <WalletSection />
+
+      <FromNeutron />
+
 
       <Flex justifyContent="center" mb={4}>
         <NextLink href="from-stargaze">
@@ -83,7 +91,7 @@ export default function Home() {
         </NextLink>
       </Flex>
 
-      {/* <SellNfts /> */}
+
     </Container>
   );
 }

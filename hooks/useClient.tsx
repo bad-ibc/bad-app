@@ -3,12 +3,32 @@ import { useChain } from '@cosmos-kit/react';
 import { useRef } from 'react';
 import { contracts } from 'badkidsjs';
 import {contracts as BadBridgeContracts} from '../bad-bridge-ts'
-import { chainName, marketplaceContract, badkidsAddress } from '../config';
+import { neutronChainName, stargazeChainName, marketplaceContract, badkidsAddress , neutronContractAddress} from '../config';
 
 export const useClient = () => {
-  const { getSigningCosmWasmClient, address } = useChain(chainName);
+  const neutronChainContext = useChain(neutronChainName);
+  const neutronAddress = neutronChainContext.address
+  const getNeutronSigningCosmWasmClient = neutronChainContext.getSigningCosmWasmClient
+  const signingNeutronCosmWasmClientRef = useRef<SigningCosmWasmClient>();
+
+  const connectToNeutron = neutronChainContext.isWalletConnected ? neutronChainContext.enable : neutronChainContext.connect
+  // const connectToNeutron = neutronChainContext.enable
+  // await neutronChainContext.enable()
+  
+  
+  const chainContext = useChain(stargazeChainName);
+ const { getSigningCosmWasmClient, address }  = chainContext;
   const signingCosmWasmClientRef = useRef<SigningCosmWasmClient>();
   const noAddressWarn = 'Wallet is not connected.';
+
+  const fetchNeutronSigningCosmWasmClient = async () => {
+    if (signingNeutronCosmWasmClientRef.current) {
+      return signingNeutronCosmWasmClientRef.current
+    }
+    const signingNeutronCosmWasmClient = await getNeutronSigningCosmWasmClient()
+    signingNeutronCosmWasmClientRef.current = signingNeutronCosmWasmClient
+    return signingNeutronCosmWasmClient
+  }
 
   const fetchSigningCosmWasmClient = async () => {
     if (signingCosmWasmClientRef.current) {
@@ -19,11 +39,28 @@ export const useClient = () => {
     return signingCosmWasmClient;
   };
 
+  // const getBadBridgeQueryClient = async () => {
+  //   const { BadBridgeClient,  } = BadBridgeContracts.BadBridge;
+  //   const getBadBridgeQueryClient = BadBridgeContracts.BadBridge.getBadBridgeQueryClient;
+  //   await BadBridgeContracts.BadBridge.useBadBridgeNftTransfersQuery({
+  //     client: BadBridgeClient,
+  //     address: neutronAddress,
+  //     contractAddress: neutronContractAddress
+  //   })
+  //   return getBadBridgeQueryClient()
+  // }
+
   const getBadBridgeClient = async () => {
-    if (!address) throw Error(noAddressWarn);
+    if (!neutronAddress) {
+      await connectToNeutron()
+    }
     const { BadBridgeClient } = BadBridgeContracts.BadBridge;
-    const signingCosmWasmClient = await fetchSigningCosmWasmClient();
-    return new BadBridgeClient(signingCosmWasmClient, address, badkidsAddress);
+    const signingCosmWasmClient = await fetchNeutronSigningCosmWasmClient();
+    return new BadBridgeClient(
+      signingCosmWasmClient,
+      String(neutronAddress),
+      neutronContractAddress
+    );
   };
 
   const getMarketplaceClient = async () => {
@@ -65,5 +102,6 @@ export const useClient = () => {
     getMarketplaceMsgComposer,
     getSg721UpdatableClient,
     getSg721UpdatableMsgComposer,
+    getBadBridgeClient
   };
 };

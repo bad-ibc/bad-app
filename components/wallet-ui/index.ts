@@ -1,3 +1,4 @@
+export * from './icons';
 export * from './astronaut';
 export * from './wallet-connect';
 export * from './warn-block';

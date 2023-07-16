@@ -1,36 +1,54 @@
-import { GridItem, Flex, Text, Image, Grid } from '@chakra-ui/react';
+import { GridItem, Flex, Text, Image, Grid, useColorModeValue } from '@chakra-ui/react';
 import { exponent } from 'config';
 import { useColor } from 'hooks';
-import { getHttpUrl, isGtZero, toDisplayAmount } from 'utils';
+import { getHttpUrl, isGtZero, toDisplayAmount, getImage } from 'utils';
 import { Token, Tokens } from '../../types';
 import { StarsIcon } from './stars-icon';
+
 
 interface INftCard {
   handleCardClick: (token: Token) => void;
   token: Token;
 }
 
-const NftCard: React.FC<INftCard> = ({ token, handleCardClick }) => {
+export const NftCard: React.FC<INftCard> = ({ token, handleCardClick }) => {
   const { textColor } = useColor();
+
+  // const getImage = (tokenId) => {
+  //   const images = {
+  //     7:'https://res.cloudinary.com/stargaze/image/upload/w_700/b5ij1wrgjzmzcivljffz.jpg',
+  //     100: 'https://res.cloudinary.com/stargaze/image/upload/w_700/u5swhukgqofrwrqj7vyp.jpg',
+  //     45: 'https://res.cloudinary.com/stargaze/image/upload/w_700/ouw1ndsrjjbhe0btkn6u.jpg',
+  //     73: 'https://res.cloudinary.com/stargaze/image/upload/w_700/ay895kdyocd5ublmlukw.jpg',
+  //     88: 'https://res.cloudinary.com/stargaze/image/upload/w_700/ucjpnj0fh1segz3fuwqf.jpg',
+  //     22: 'https://res.cloudinary.com/stargaze/image/upload/w_700/plbs1zrqrdmizjpo8mnb.jpg',
+  //     84: 'https://res.cloudinary.com/stargaze/image/upload/w_700/badkx397up5ww8epsldm.jpg',
+  //     30: 'https://res.cloudinary.com/stargaze/image/upload/w_700/snav2rleap7jhvzm8pyo.jpg',
+  //     42: 'https://res.cloudinary.com/stargaze/image/upload/w_700/w91bnc1hjm6yfjdvpngz.jpg'
+  //   }
+  //   return images[tokenId]
+  // }
+
+
   return (
     <GridItem cursor="pointer" onClick={() => handleCardClick(token)}>
       <Image
         mb="12px"
         alt={token.name}
         boxSize="232px"
-        borderRadius="6px"
-        src={getHttpUrl(token.imageUrl)}
+        borderRadius="35px"
+        src={getImage(token.tokenId)}
       />
       <Text
-        fontWeight="600"
+        fontWeight="800"
         fontSize="14px"
-        color={textColor.primary}
+        color={useColorModeValue('primary.900', 'primary.100')}
         mb="8px"
         lineHeight="shorter"
       >
         {token.name}
       </Text>
-      {isGtZero(token.highestCollectionBid) && (
+      {/* {isGtZero(token.highestCollectionBid) && (
         <SplitText
           left="Highest offer"
           right={`${toDisplayAmount(
@@ -47,7 +65,7 @@ const NftCard: React.FC<INftCard> = ({ token, handleCardClick }) => {
           right={`${toDisplayAmount(token.price.amount, exponent)} STARS`}
           withIcon
         />
-      )}
+      )} */}
     </GridItem>
   );
 };
@@ -119,6 +137,7 @@ export const NftCards = ({
       templateColumns="repeat(3, 1fr)"
       justifyContent="space-between"
       gridGap="24px"
+      background="transparent"
     >
       {allNfts.tokens.tokens.map((token) => (
         <NftCard

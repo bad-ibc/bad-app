@@ -7,6 +7,7 @@ import {
   Icon,
   Stack,
   useColorModeValue,
+  Image,
   Text,
 } from '@chakra-ui/react';
 import { MouseEventHandler } from 'react';
@@ -27,7 +28,7 @@ import {
   WalletConnectComponent,
   ChainCard,
 } from './wallet-ui';
-import { chainName } from '../config';
+import { stargazeChainName } from '../config';
 
 export const WalletSection = () => {
   const {
@@ -40,12 +41,15 @@ export const WalletSection = () => {
     wallet,
     chain: chainInfo,
     logoUrl,
-  } = useChain(chainName);
+  } = useChain(stargazeChainName);
+
+  // const neutronChainInfo = useChain('neutrontestnet');
+  // console.log({neutronChainInfo})
 
   const chain = {
-    chainName,
+    chainName: stargazeChainName,
     label: chainInfo.pretty_name,
-    value: chainName,
+    value: stargazeChainName,
     icon: logoUrl,
   };
 
@@ -63,6 +67,7 @@ export const WalletSection = () => {
   // Components
   const connectWalletButton = (
     <WalletConnectComponent
+      
       walletStatus={status}
       disconnect={
         <Disconnected buttonText="Connect Wallet" onClick={onClickConnect} />
@@ -97,15 +102,19 @@ export const WalletSection = () => {
     />
   );
 
-  const userInfo = username && (
-    <ConnectedUserInfo username={username} icon={<Astronaut />} />
-  );
   const addressBtn = (
     <CopyAddressBtn
-      walletStatus={status}
-      connected={<ConnectedShowAddress address={address} isLoading={false} />}
+    walletStatus={status}
+    connected={<ConnectedShowAddress address={address} isLoading={false} />}
     />
-  );
+    );
+    
+    const userInfo = username && (
+      <GridItem  onClick={onClickOpenView} border="hidden">
+        {username}
+      </GridItem>
+    );
+    const color = useColorModeValue('primary.200', 'primary.900')
 
   return (
     <Center py={16}>
@@ -117,31 +126,34 @@ export const WalletSection = () => {
         alignItems="center"
         justifyContent="center"
       >
-        <GridItem marginBottom={'20px'}>
+        {/* <GridItem marginBottom={'20px'}>
           <ChainCard
-            prettyName={chain?.label || chainName}
+            prettyName={chain?.label || stargazeChainName}
             icon={chain?.icon}
           />
-        </GridItem>
+        </GridItem> */}
         <GridItem px={6}>
           <Stack
+            className="dotted-border"
             justifyContent="center"
+            // border="dashed"
             alignItems="center"
             borderRadius="lg"
-            bg={useColorModeValue('white', 'blackAlpha.400')}
-            boxShadow={useColorModeValue(
-              '0 0 2px #dfdfdf, 0 0 6px -2px #d3d3d3',
-              '0 0 2px #363636, 0 0 8px -2px #4f4f4f'
-            )}
-            spacing={4}
+            // spacing={4}
             px={4}
-            py={{ base: 6, md: 12 }}
+            py={{ base: 6, md: 6 }}
+            color={color}
           >
             {userInfo}
             {addressBtn}
+
+            {// if address don't show box }
+            }
+            {!address && <Box  w="full" maxW={{ base: 52, md: 64 }}>{connectWalletButton}</Box>}
+{/* 
             <Box w="full" maxW={{ base: 52, md: 64 }}>
               {connectWalletButton}
-            </Box>
+            </Box> */}
             {connectWalletWarn && <GridItem>{connectWalletWarn}</GridItem>}
           </Stack>
         </GridItem>

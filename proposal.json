@@ -1,0 +1,25 @@
+"content": {
+  "@type": "/cosmos.params.v1beta1.ParameterChangeProposal",
+  "title": "Doc update test: Param change for MaxValidators",
+  "description": "Testing the proposal format for increasing the MaxValidator param",
+  "changes": [
+    {
+      "subspace": "icahost",
+      "key": "AllowMessages",
+      "value": "[\"/cosmos.bank.v1beta1.MsgSend\",\"/cosmos.bank.v1beta1.MsgMultiSend\",\"/cosmos.staking.v1beta1.MsgDelegate\",\"/cosmos.staking.v1beta1.MsgUndelegate\",\"/cosmos.staking.v1beta1.MsgBeginRedelegate\",\"/cosmos.staking.v1beta1.MsgCreateValidator\",\"/cosmos.staking.v1beta1.MsgEditValidator\",\"/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward\",\"/cosmos.distribution.v1beta1.MsgSetWithdrawAddress\",\"/cosmos.distribution.v1beta1.MsgWithdrawValidatorCommission\",\"/cosmos.distribution.v1beta1.MsgFundCommunityPool\",\"/cosmos.gov.v1beta1.MsgVote\",\"/cosmos.gov.v1beta1.MsgVoteWeighted\",\"/ibc.applications.transfer.v1.MsgTransfer\",\"/cosmwasm.wasm.v1.MsgExecuteContract\"]"
+    }
+  ]
+}
+
+{
+  "title": "Staking Param Change",
+  "description": "Update ICA AllowMessages to include /cosmwasm.wasm.v1.MsgExecuteContract",
+  "changes": [
+    {
+      "subspace": "icahost",
+      "key": "AllowMessages",
+      "value": "[\"/cosmos.bank.v1beta1.MsgSend\",\"/cosmos.bank.v1beta1.MsgMultiSend\",\"/cosmos.staking.v1beta1.MsgDelegate\",\"/cosmos.staking.v1beta1.MsgUndelegate\",\"/cosmos.staking.v1beta1.MsgBeginRedelegate\",\"/cosmos.staking.v1beta1.MsgCreateValidator\",\"/cosmos.staking.v1beta1.MsgEditValidator\",\"/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward\",\"/cosmos.distribution.v1beta1.MsgSetWithdrawAddress\",\"/cosmos.distribution.v1beta1.MsgWithdrawValidatorCommission\",\"/cosmos.distribution.v1beta1.MsgFundCommunityPool\",\"/cosmos.gov.v1beta1.MsgVote\",\"/cosmos.gov.v1beta1.MsgVoteWeighted\",\"/ibc.applications.transfer.v1.MsgTransfer\",\"/cosmwasm.wasm.v1.MsgExecuteContract\"]"
+    }
+  ],
+  "deposit": "1000ustars"
+}

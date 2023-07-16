@@ -1,33 +1,58 @@
 import { extendTheme } from '@chakra-ui/react';
+import { StyleFunctionProps } from '@chakra-ui/theme-tools'
 
 export const defaultTheme = extendTheme({
+  initialColorMode: 'light',
+  // styles: {
+  //   global: (props: StyleFunctionProps) => ({
+  //     body: {
+  //       color: 'default',
+  //       bg: '#1B1B18',
+  //     },
+  //   }),
+  // },
   fonts: {
     body: 'Made Of Scars, Inter, system-ui, sans-serif',
     heading: 'Made Of Scars, Work Sans, system-ui, sans-serif',
   },
   colors: {
+    brand: {
+      100: "#1B1B18",
+      900: "#1B1B18"
+    },
+    gray: {
+      100: '#EEF2F8',
+      200: '#EEF2F8',
+      300: '#EEF2F8',
+      400: '#EEF2F8',
+      500: '#EEF2F8',
+      600: '#1B1B18',
+      700: '#1B1B18',
+      800: '#1B1B18',
+      900: '#1B1B18',
+    },
     primary: {
-      50: '#e5e7f9',
-      100: '#bec4ef',
-      200: '#929ce4',
-      300: '#6674d9',
-      400: '#4657d1',
-      500: '#2539c9',
-      600: '#2133c3',
-      700: '#1b2cbc',
-      800: '#1624b5',
-      900: '#0d17a9',
+      50: '#1B1B18',
+      100: '#1B1B18',
+      200: '#1B1B18',
+      300: '#1B1B18',
+      400: '#1B1B18',
+      500: '#1B1B18',
+      600: '#EEF2F8',
+      700: '#EEF2F8',
+      800: '#EEF2F8',
+      900: '#EEF2F8',
     },
     black: {
       100: '#EEF2F8',
-      200: '#A7B4C2',
-      300: '#697584',
-      400: '#525C68',
-      500: '#3B434D',
-      600: '#2C3137',
-      700: '#434B55',
-      800: '#25282E',
-      900: '#1D2024',
+      200: '#EEF2F8',
+      300: '#EEF2F8',
+      400: '#EEF2F8',
+      500: '#EEF2F8',
+      600: '#1B1B18',
+      700: '#1B1B18',
+      800: '#1B1B18',
+      900: '#1B1B18',
     },
   },
   breakPoints: {

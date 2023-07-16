@@ -17,7 +17,7 @@ import { LargeButton } from 'components/base';
 import { contracts, stargaze } from 'badkidsjs';
 import { useChain } from '@cosmos-kit/react';
 import {
-  chainName,
+  stargazeChainName,
   coin,
   COLLECTION,
   COLLECTIONS_MINT,
@@ -62,7 +62,7 @@ export const MintNfts = () => {
     getRpcEndpoint,
     getCosmWasmClient,
     getSigningCosmWasmClient,
-  } = useChain(chainName);
+  } = useChain(stargazeChainName);
   const { tx } = useTx();
   const collectionsQuery = useQuery<CollectionsMint>(COLLECTIONS_MINT, {
     variables: {
@@ -84,7 +84,7 @@ export const MintNfts = () => {
 
       if (!rpcEndpoint) {
         console.log('no rpc endpoint — using a fallback');
-        rpcEndpoint = `https://rpc.cosmos.directory/${chainName}`;
+        rpcEndpoint = `https://rpc.cosmos.directory/${stargazeChainName}`;
       }
 
       const client = await stargaze.ClientFactory.createRPCQueryClient({
@@ -148,16 +148,16 @@ export const MintNfts = () => {
       };
 
       // *WHITELIST QUERY*
-      let whitelist: Whitelist;
-      if (minterInfo.whitelist) {
-        const whitelistContractAddress = minterInfo.whitelist || '';
-        const { WhitelistQueryClient } = contracts.Whitelist;
-        const whitelistQueryClient = new WhitelistQueryClient(
-          cosmWasmClient,
-          whitelistContractAddress
-        );
-        whitelist = await whitelistQueryClient.config();
-      }
+      // let whitelist: Whitelist;
+      // if (minterInfo.whitelist) {
+      //   const whitelistContractAddress = minterInfo.whitelist || '';
+      //   const { WhitelistQueryClient } = contracts.Whitelist;
+      //   const whitelistQueryClient = new WhitelistQueryClient(
+      //     cosmWasmClient,
+      //     whitelistContractAddress
+      //   );
+      //   whitelist = await whitelistQueryClient.config();
+      // }
 
       // *SG721 QUERY*
       const { SG721BaseQueryClient } = contracts.SG721Base;
@@ -173,7 +173,7 @@ export const MintNfts = () => {
 
       setData((prev) => ({
         ...prev,
-        collectionInfo: { minter, sg721, whitelist },
+        collectionInfo: { minter, sg721 },
       }));
     } catch (error) {
       console.error(error);

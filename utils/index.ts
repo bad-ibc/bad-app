@@ -9,6 +9,21 @@ export const toDisplayAmount = (
   if (!amount) return '0';
   return new BigNumber(amount).shiftedBy(-exponent).decimalPlaces(2).toString();
 };
+export const getImage = (tokenId) => {
+  const images = {
+    7:'https://res.cloudinary.com/stargaze/image/upload/w_700/b5ij1wrgjzmzcivljffz.jpg',
+    100: 'https://res.cloudinary.com/stargaze/image/upload/w_700/u5swhukgqofrwrqj7vyp.jpg',
+    45: 'https://res.cloudinary.com/stargaze/image/upload/w_700/ouw1ndsrjjbhe0btkn6u.jpg',
+    73: 'https://res.cloudinary.com/stargaze/image/upload/w_700/ay895kdyocd5ublmlukw.jpg',
+    88: 'https://res.cloudinary.com/stargaze/image/upload/w_700/ucjpnj0fh1segz3fuwqf.jpg',
+    22: 'https://res.cloudinary.com/stargaze/image/upload/w_700/plbs1zrqrdmizjpo8mnb.jpg',
+    84: 'https://res.cloudinary.com/stargaze/image/upload/w_700/badkx397up5ww8epsldm.jpg',
+    30: 'https://res.cloudinary.com/stargaze/image/upload/w_700/snav2rleap7jhvzm8pyo.jpg',
+    42: 'https://res.cloudinary.com/stargaze/image/upload/w_700/w91bnc1hjm6yfjdvpngz.jpg'
+  }
+  return images[tokenId]
+}
+
 
 export const toRawAmount = (
   amount: number | string | undefined,

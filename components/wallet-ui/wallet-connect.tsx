@@ -19,23 +19,24 @@ export const ConnectWalletButton = ({
       size="lg"
       isLoading={isLoading}
       isDisabled={isDisabled}
-      bgImage="linear-gradient(109.6deg, rgba(157,75,199,1) 11.2%, rgba(119,81,204,1) 83.1%)"
-      color="white"
+      // bgImage="linear-gradient(109.6deg, rgba(157,75,199,1) 11.2%, rgba(119,81,204,1) 83.1%)"
+      // color="white"
+      // color={useColorModeValue('primary.100', 'primary.900')}
       opacity={1}
       transition="all .5s ease-in-out"
       _hover={{
-        bgImage:
-          'linear-gradient(109.6deg, rgba(157,75,199,1) 11.2%, rgba(119,81,204,1) 83.1%)',
-        opacity: 0.75,
+        // bgImage:
+        //   'linear-gradient(109.6deg, rgba(157,75,199,1) 11.2%, rgba(119,81,204,1) 83.1%)',
+        opacity: 1,
       }}
-      _active={{
-        bgImage:
-          'linear-gradient(109.6deg, rgba(157,75,199,1) 11.2%, rgba(119,81,204,1) 83.1%)',
-        opacity: 0.9,
-      }}
+      // _active={{
+      //   // bgImage:
+      //   //   'linear-gradient(109.6deg, rgba(157,75,199,1) 11.2%, rgba(119,81,204,1) 83.1%)',
+      //   opacity: 0.9,
+      // }}
       onClick={onClickConnectBtn}
     >
-      <Icon as={icon ? icon : IoWallet} mr={2} />
+      {/* <Icon as={icon ? icon : IoWallet} mr={2} /> */}
       {buttonText ? buttonText : 'Connect Wallet'}
     </Button>
   );
@@ -49,7 +50,10 @@ export const Disconnected = ({
   onClick: MouseEventHandler<HTMLButtonElement>;
 }) => {
   return (
-    <ConnectWalletButton buttonText={buttonText} onClickConnectBtn={onClick} />
+    <ConnectWalletButton
+    // background="primary.100"
+
+    buttonText={buttonText} onClickConnectBtn={onClick} />
   );
 };
 
@@ -79,6 +83,7 @@ export const Rejected = ({
   onClick: MouseEventHandler<HTMLButtonElement>;
 }) => {
   const bg = useColorModeValue('orange.200', 'orange.300');
+  const color = useColorModeValue('primary.900', 'primary.200')
 
   return (
     <Stack>
@@ -92,7 +97,7 @@ export const Rejected = ({
           isInline={true}
           borderRadius="md"
           bg={bg}
-          color="blackAlpha.900"
+          color={color}
           p={4}
           spacing={1}
         >
@@ -119,6 +124,7 @@ export const Error = ({
   onClick: MouseEventHandler<HTMLButtonElement>;
 }) => {
   const bg = useColorModeValue('orange.200', 'orange.300');
+  const color = useColorModeValue('primary.900', 'primary.200')
 
   return (
     <Stack>
@@ -132,7 +138,7 @@ export const Error = ({
           isInline={true}
           borderRadius="md"
           bg={bg}
-          color="blackAlpha.900"
+          color={color}
           p={4}
           spacing={1}
         >

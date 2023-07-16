@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useChain } from '@cosmos-kit/react';
+
 import {
   Modal,
   ModalOverlay,
@@ -15,6 +17,7 @@ import { LargeButton } from '../../base/buttons';
 import { Token, TxResult } from '../../types';
 import { useClient, useColor, useTransactionToast } from 'hooks';
 import { isAddressValid } from 'utils';
+import { stargazeChainName, interchainAccountAddress } from 'config';
 
 export const TransferNftModal = ({
   token,
@@ -25,10 +28,10 @@ export const TransferNftModal = ({
   modalControl: UseDisclosureReturn;
   update: () => void;
 }) => {
-  const interchainAccountAddress = 'stars1lwhvy49x2vet0lmel67tdlx00qchpkw4t38377'; // TODO: replace this with the real interchain account address
+  const { getSigningCosmWasmClient, address } = useChain(stargazeChainName);
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const { getSg721UpdatableClient } = useClient();
+  const { getSg721UpdatableClient, getBadBridgeClient } = useClient();
 
   const { showToast } = useTransactionToast();
 
